@@ -1,0 +1,79 @@
+<template>
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">所有商品</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div
+        v-for="product in products"
+        :key="product.id"
+        class="bg-white rounded-lg shadow-md overflow-hidden"
+      >
+        <NuxtLink :to="`/products/${product.id}`">
+          <img
+            :src="product.image"
+            :alt="product.title"
+            class="w-full h-48 object-contain p-4"
+          />
+        </NuxtLink>
+        <div class="p-4">
+          <NuxtLink :to="`/products/${product.id}`">
+            <h3 class="text-lg font-semibold hover:text-blue-600">
+              {{ product.title }}
+            </h3>
+          </NuxtLink>
+          <p class="text-gray-600 mt-2">${{ product.price }}</p>
+          <p class="text-gray-500 mt-2 text-sm truncate">
+            {{ product.description }}
+          </p>
+          <div class="mt-2 mb-4">
+            <span
+              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700"
+            >
+              {{ product.category }}
+            </span>
+          </div>
+          <button
+            @click="addToCart(product)"
+            class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
+          >
+            加入購物車
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { useCartStore } from "~/stores/cart";
+
+const cartStore = useCartStore();
+const products = ref([]);
+
+onMounted(async () => {
+  try {
+    const response = await fetch("http://localhost:3001/api/products");
+    products.value = await response.json();
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+});
+
+const addToCart = (product) => {
+  cartStore.addToCart({
+    id: product.id,
+    name: product.title, // 注意：API 返回的是 title
+    price: product.price,
+    image: product.image,
+  });
+  alert("已加入購物車！");
+};
+</script>
+
+<style scoped>
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>
