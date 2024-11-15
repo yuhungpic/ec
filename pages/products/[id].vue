@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <!-- 錯誤狀態 -->
   <div v-if="error" class="text-center py-12 text-red-600">
     載入失敗，請稍後再試
@@ -13,9 +12,6 @@
 
   <!-- 商品詳情 -->
   <div v-else-if="product" class="max-w-7xl mx-auto px-4 py-8">
-=======
-  <div v-if="product" class="max-w-7xl mx-auto px-4 py-8">
->>>>>>> 0cdc5c90974df5c8a291b9c52094b9d22b006507
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div class="bg-white p-4 rounded-lg">
         <img 
@@ -42,13 +38,6 @@
       </div>
     </div>
   </div>
-<<<<<<< HEAD
-=======
-  <div v-else class="text-center py-12">
-    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-    載入中...
-  </div>
->>>>>>> 0cdc5c90974df5c8a291b9c52094b9d22b006507
 </template>
 
 <script setup>
@@ -56,7 +45,6 @@ import { useCartStore } from "~/stores/cart";
 
 const route = useRoute();
 const cartStore = useCartStore();
-<<<<<<< HEAD
 
 // 使用 useFetch 獲取商品詳情
 const { data: product, pending, error } = await useFetch(
@@ -65,18 +53,6 @@ const { data: product, pending, error } = await useFetch(
     key: route.params.id, // 使用商品 ID 作為緩存 key
   }
 );
-=======
-const product = ref(null);
-
-onMounted(async () => {
-  try {
-    const response = await fetch(`http://localhost:3001/api/products/${route.params.id}`);
-    product.value = await response.json();
-  } catch (error) {
-    console.error("Error fetching product:", error);
-  }
-});
->>>>>>> 0cdc5c90974df5c8a291b9c52094b9d22b006507
 
 const addToCart = () => {
   if (product.value) {
