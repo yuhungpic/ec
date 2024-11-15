@@ -31,10 +31,13 @@ export default defineNuxtConfig({
       ],
     },
   },
+<<<<<<< HEAD
 
   runtimeConfig: {
     public: {
       apiBase: 'http://localhost:3001'
     }
   }
+=======
+>>>>>>> 0cdc5c90974df5c8a291b9c52094b9d22b006507
 });
